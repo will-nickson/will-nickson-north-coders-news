@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
 import NavBar from "./NavBar/NavBar";
-import ArticleList from "./ArticleList";
-import SingleArticle from "./SingleArticle";
+import ArticleList from "./Articles/ArticleList";
+import SingleArticle from "./Articles/SingleArticle";
 import TopicList from "./Topics/TopicList";
 import "./App.css";
 

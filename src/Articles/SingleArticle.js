@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import * as api from "./api";
-import Error from "./Error";
+import * as api from "../api";
+import Comments from "../Articles/Comments/Comments";
+import Error from "../Error";
 
 export class SingleArticle extends Component {
   state = {
     article: {},
-    comments: [],
     hasError: false,
     loading: true
   };
 
   render() {
-    const { article, comments, hasError, loading } = this.state;
+    const { article, hasError, loading } = this.state;
 
     if (loading) return <p>Loading...</p>;
     if (hasError) return <Error error={hasError} />;
@@ -46,33 +46,7 @@ export class SingleArticle extends Component {
             </ul>
           </div>
         </div>
-        <div className="row comments-card">
-          <div className="col s12 m6">
-            <div className="col s12 m5 offset-m1">
-              {comments
-                ? comments.map((comment, index) => {
-                    return (
-                      <ul className="card z-depth-0 comment-list" key={index}>
-                        <span className="comment-author">
-                          <p className="grey-text">
-                            <i className="material-icons">perm_identity</i>
-                            {comment.author}
-                          </p>
-                        </span>
-                        <span className="comment-author">{comment.body}</span>
-                        <span className="comment-author">
-                          <p className="grey-text">
-                            <i className="material-icons">thumb_up</i>
-                            {comment.votes}
-                          </p>
-                        </span>
-                      </ul>
-                    );
-                  })
-                : null}
-            </div>
-          </div>
-        </div>
+        <Comments article_id={this.props.article_id} />
       </div>
     );
   }
@@ -80,12 +54,10 @@ export class SingleArticle extends Component {
   componentDidMount() {
     const { article_id } = this.props;
 
-    const article = api.getArticleById(article_id);
-    const comments = api.getComments(article_id);
-
-    return Promise.all([article, comments])
-      .then(([article, comments]) =>
-        this.setState({ article, comments, loading: false, hasError: false })
+    api
+      .getArticleById(article_id)
+      .then(article =>
+        this.setState({ article, loading: false, hasError: false })
       )
       .catch(error => {
         this.setState({ hasError: error, loading: false });
