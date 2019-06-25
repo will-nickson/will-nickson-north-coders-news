@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import "./App.css";
+import { Router } from "@reach/router";
+import NavBar from "./NavBar/NavBar";
 import ArticleList from "./ArticleList";
-import NavBar from "./NavBar";
+import SingleArticle from "./SingleArticle";
+import TopicList from "./TopicList";
+import "./App.css";
 
 export class App extends Component {
   state = {
@@ -13,7 +16,11 @@ export class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <ArticleList />
+        <Router>
+          <TopicList path="/topics" />
+          <ArticleList path="/" />
+          <SingleArticle path="/articles/:article_id" />
+        </Router>
       </div>
     );
   }
