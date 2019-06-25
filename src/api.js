@@ -26,5 +26,10 @@ export const getComments = article_id => {
   });
 };
 
-//if it cant read data you might have named articles different in the back-end i.e. article
-// add queries to the object above i.e. limit ect.
+export const getTopics = topics => {
+  return request
+    .get(`/topics`, { params: { topics: topics } })
+    .then(({ data }) => {
+      return data.topics;
+    });
+};

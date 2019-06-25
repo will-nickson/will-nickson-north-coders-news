@@ -31,11 +31,19 @@ export default function NavBar() {
             <button>Topics List</button>
           </Link>
         </div>
-        <div className="left">
+        <div className="topics">
           <select>
-            <option>Coding</option>
-            <option>Football</option>
-            <option>Cooking</option>
+            <option>
+              <Link to="/topics/coding">Coding</Link>
+            </option>
+
+            <option>
+              <Link to="/topics/football">Football</Link>
+            </option>
+
+            <option>
+              <Link to="/topics/cooking">Cooking</Link>
+            </option>
           </select>
         </div>
       </div>

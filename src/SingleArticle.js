@@ -21,10 +21,16 @@ export class SingleArticle extends Component {
         <div className="row article-card">
           <div className="col s12 m6">
             <ul className="card z-depth-0 article-list">
-              <span className="card-title">{article.title}</span>
+              <span className="card-title">
+                <p>{article.title}</p>
+              </span>
               {/* <span className="card-body">{article.body}</span> */}
-              <span className="card-topic">{article.topic}</span>
-              <span className="card-created-at">{article.created_at}</span>
+              <span className="card-topic">
+                <p>{article.topic}</p>
+              </span>
+              <span className="card-created-at">
+                <p>{article.created_at}</p>
+              </span>
               <p className="grey-text">
                 <i className="material-icons">thumb_up</i>
                 {article.votes}
