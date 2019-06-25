@@ -20,6 +20,7 @@ export class App extends Component {
           <TopicList path="/topics" />
           <ArticleList path="/" />
           <SingleArticle path="/articles/:article_id" />
+          {/* <Error default /> */}
         </Router>
       </div>
     );

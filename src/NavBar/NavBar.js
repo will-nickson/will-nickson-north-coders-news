@@ -21,8 +21,8 @@ export default function NavBar() {
         <SignInLink />
 
         <ul className="left">
-          <li>Date Created</li>
-          <li>Comment Count</li>
+          <li>Date</li>
+          <li>Comment</li>
           <li>Votes</li>
         </ul>
 
