@@ -33,3 +33,15 @@ export const getTopics = topics => {
       return data.topics;
     });
 };
+
+export const postComment = (article_id, author, userComment) => {
+  return request
+    .post(`/articles/${article_id}/comments`, {
+      params: { author: author },
+      comments: userComment
+    })
+    .then(({ data }) => {
+      console.log(data.articles);
+      return data.articles;
+    });
+};

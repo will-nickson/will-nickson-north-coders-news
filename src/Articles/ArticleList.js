@@ -14,18 +14,31 @@ export class ArticleList extends Component {
     if (loading) return <p>Loading...</p>;
     if (hasError) return <Error error={hasError} />;
     return (
-      <div className="article-list section">
-        <ul className="card z-depth-0 article-list">
-          {articles.map((article, index) => {
-            return (
-              <li className="card-content grey-text text-darken-3" key={index}>
-                <Link to={`/articles/${article.article_id}`}>
-                  {article.title}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+      <div className="container section article-list">
+        <div className="card z-depth-1">
+          <div className="card-content">
+            {articles.map((article, index) => {
+              return (
+                <ul className="card z-depth-1 article-list">
+                  <li
+                    className="card-content grey-text text-darken-3"
+                    key={index}
+                  >
+                    <Link to={`/articles/${article.article_id}`}>
+                      {article.title}
+                    </Link>
+                  </li>
+                  <li className="card-content grey-text text-darken-3 left">
+                    {article.author}
+                  </li>
+                  <li className="card-content grey-text text-darken-3">
+                    ID: {article.article_id}
+                  </li>
+                </ul>
+              );
+            })}
+          </div>
+        </div>
       </div>
     );
   }

@@ -17,8 +17,8 @@ export class SingleArticle extends Component {
     if (hasError) return <Error error={hasError} />;
 
     return (
-      <div className="ArticleList container">
-        <div className="row article-card">
+      <div className="container section single-article">
+        <div className="row z-depth-1 article-card">
           <div className="col s12 m6">
             <ul className="card z-depth-0 article-list">
               <span className="card-title">
@@ -46,7 +46,10 @@ export class SingleArticle extends Component {
             </ul>
           </div>
         </div>
-        <Comments article_id={this.props.article_id} />
+        <Comments
+          article_id={this.props.article_id}
+          author={this.props.author}
+        />
       </div>
     );
   }
