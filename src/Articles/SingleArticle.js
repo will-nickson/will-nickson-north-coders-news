@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../api";
 import Comments from "../Articles/Comments/Comments";
 import Error from "../Error";
+import Voter from "../Voter";
 
 export class SingleArticle extends Component {
   state = {
@@ -12,6 +13,7 @@ export class SingleArticle extends Component {
 
   render() {
     const { article, hasError, loading } = this.state;
+    const { article_id } = this.props;
 
     if (loading) return <p>Loading...</p>;
     if (hasError) return <Error error={hasError} />;
@@ -31,10 +33,7 @@ export class SingleArticle extends Component {
               <span className="card-created-at">
                 <p>{article.created_at}</p>
               </span>
-              <p className="grey-text">
-                <i className="material-icons">thumb_up</i>
-                {article.votes}
-              </p>
+              <Voter votes={article.votes} article_id={article_id} />
               <p className="grey-text">
                 <i className="material-icons">comments</i>
                 {article.comment_count}

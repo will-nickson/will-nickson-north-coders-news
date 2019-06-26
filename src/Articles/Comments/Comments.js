@@ -5,9 +5,9 @@ import Error from "../../Error";
 export class Comments extends Component {
   state = {
     comments: [],
-    userComment: "",
     hasError: false,
-    loading: true
+    loading: true,
+    userComment: ""
   };
 
   render() {
@@ -29,10 +29,10 @@ export class Comments extends Component {
                 <input
                   type="text"
                   name="userComment"
-                  //   style={{ flex: "10", padding: "5px" }}
                   placeholder="Add comment..."
-                  value={this.state.userComment}
+                  value={this.state.value}
                   onChange={this.onChange}
+                  //   style={{ flex: "10", padding: "5px" }}
                 />
               </div>
               <div>
@@ -40,6 +40,7 @@ export class Comments extends Component {
                   type="submit"
                   value="Submit"
                   className="btn"
+                  onChange={this.onChange}
                   //   style={{ flex: "1" }}
                 />
               </div>
@@ -80,25 +81,28 @@ export class Comments extends Component {
     );
   }
 
-  //   addComment = event => {
-  //     event.preventDefault();
+  addComment = event => {
+    event.preventDefault();
 
-  //     const { comments } = this.state;
-  //     const { article_id, author } = this.props;
+    const { userComment } = this.state;
+    const { article_id, author = "jessjelly" } = this.props;
 
-  //     api.postComment(article_id, author, userComment).then(({ data }) => {
-  //       //   const { userComment } = data;
-  //       console.log(data);
-  //       this.setState(prevState => {
-  //         return {
-  //           comments: [...this.state.comments],
-  //           userComment: ""
-  //         };
-  //       });
-  //     });
-  //   };
+    api
+      .postComment(article_id, author, userComment)
+      .then(comment => {
+        this.setState(prevState => {
+          return {
+            comments: [comment, ...prevState.comments],
+            userComment: ""
+          };
+        });
+      })
+      .catch(err => console.log(err));
+  };
 
-  onChange = event => this.setState({ comments: event.target.value });
+  onChange = event => {
+    this.setState({ userComment: event.target.value });
+  };
 
   componentDidMount() {
     const { article_id } = this.props;

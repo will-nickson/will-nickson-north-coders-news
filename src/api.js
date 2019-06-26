@@ -4,10 +4,10 @@ const request = axios.create({
   baseURL: `https://will-nickson-nc-news.herokuapp.com/api`
 });
 
-export const getArticles = topic => {
+export const getArticles = (topic, sortBy) => {
   return request
     .get(`/articles`, {
-      params: { topic: topic }
+      params: { topic: topic, sort_by: sortBy }
     })
     .then(({ data }) => {
       return data.articles;
@@ -37,11 +37,18 @@ export const getTopics = topics => {
 export const postComment = (article_id, author, userComment) => {
   return request
     .post(`/articles/${article_id}/comments`, {
-      params: { author: author },
-      comments: userComment
+      username: author,
+      body: userComment
     })
     .then(({ data }) => {
-      console.log(data.articles);
+      return data.comment;
+    });
+};
+
+export const patchArticleVotes = (article_id, increment) => {
+  return request
+    .patch(`/articles/${article_id}`, { inc_votes: increment })
+    .then(({ data }) => {
       return data.articles;
     });
 };

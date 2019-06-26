@@ -20,12 +20,6 @@ export default function NavBar() {
         <SignOutLink />
         <SignInLink />
 
-        <ul className="left">
-          <li>Date</li>
-          <li>Comment</li>
-          <li>Votes</li>
-        </ul>
-
         <div className="right" /*hide-on-med-and-down*/>
           <Link to="/topics">
             <button>Topics List</button>

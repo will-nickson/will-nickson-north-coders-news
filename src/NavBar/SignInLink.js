@@ -12,7 +12,7 @@ const SignInLink = () => {
       </li>
       <li>
         <Link to="/" className="btn btn-floating pink lighten-1">
-          WN
+          JJ
         </Link>
       </li>
     </ul>
