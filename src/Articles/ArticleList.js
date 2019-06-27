@@ -7,8 +7,10 @@ export class ArticleList extends Component {
   state = {
     articles: [],
     sortBy: null,
+    orderBy: null,
     hasError: false,
-    loading: true
+    loading: true,
+    page: 1
   };
   render() {
     const { articles, hasError, loading } = this.state;
@@ -29,6 +31,10 @@ export class ArticleList extends Component {
             <button onClick={() => this.setSortBy("votes")}>
               <li>Votes</li>
             </button>
+            <button onClick={() => this.setOrderBy()}>Asc</button>
+            <button onClick={() => this.setOrderBy()}>Desc</button>
+            <button onClick={() => this.changePage(-1)}>Prev</button>
+            <button onClick={() => this.changePage(1)}>Next</button>
           </ul>
         </div>
         <div className="container section article-list">
@@ -58,6 +64,14 @@ export class ArticleList extends Component {
     );
   }
 
+  changePage = direction => {
+    this.setState(prevState => ({ page: prevState.page + direction }));
+  };
+
+  setOrderBy = orderBy => {
+    this.setState({ orderBy });
+  };
+
   setSortBy = sortBy => {
     this.setState({ sortBy });
   };
@@ -69,8 +83,10 @@ export class ArticleList extends Component {
   componentDidUpdate(prevProps, prevState) {
     const topicChange = prevProps.topic !== this.props.topic;
     const sortByChange = prevState.sortBy !== this.state.sortBy;
+    const orderBy = prevState.orderBy !== this.state.orderBy;
+    const pageChange = prevState.page !== this.state.page;
 
-    if (topicChange || sortByChange) {
+    if (topicChange || sortByChange || orderBy || pageChange) {
       console.log("topic or sort has changed");
       this.fetchArticles();
     }
@@ -78,10 +94,10 @@ export class ArticleList extends Component {
 
   fetchArticles = () => {
     const { topic } = this.props;
-    const { sortBy } = this.state;
+    const { sortBy, page, orderBy } = this.state;
 
     api
-      .getArticles(topic, sortBy)
+      .getArticles(topic, sortBy, page, orderBy)
       .then(articles =>
         this.setState({ articles, loading: false, hasError: false })
       )
