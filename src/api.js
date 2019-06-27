@@ -53,6 +53,14 @@ export const patchArticleVotes = (article_id, increment) => {
     });
 };
 
+export const patchCommentVotes = (comment_id, increment) => {
+  return request
+    .patch(`/comments/${comment_id}`, { inc_votes: increment })
+    .then(({ data }) => {
+      return data.comments;
+    });
+};
+
 export const deleteComment = comment_id => {
   return request.delete(`/comments/${comment_id}`).then(({ data }) => {
     return data;

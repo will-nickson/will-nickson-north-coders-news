@@ -20,15 +20,23 @@ export class Voter extends Component {
   }
 
   handleVote = increment => {
-    const { article_id } = this.props;
+    const { article_id, comment_id } = this.props;
     this.setState(({ voteChange }) => ({
       voteChange: voteChange + increment
     }));
-    api.patchArticleVotes(article_id, increment).catch(err => {
-      this.setState(({ voteChange }) => ({
-        voteChange: voteChange - increment
-      }));
-    });
+    if (article_id) {
+      api.patchArticleVotes(article_id, increment).catch(err => {
+        this.setState(({ voteChange }) => ({
+          voteChange: voteChange - increment
+        }));
+      });
+    } else if (comment_id) {
+      api.patchCommentVotes(comment_id, increment).catch(err => {
+        this.setState(({ voteChange }) => ({
+          voteChange: voteChange - increment
+        }));
+      });
+    }
   };
 }
 export default Voter;

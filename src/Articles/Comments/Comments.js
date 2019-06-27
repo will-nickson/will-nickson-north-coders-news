@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as api from "../../api";
 import Error from "../../Error";
+import Voter from "../../Voter";
 
 export class Comments extends Component {
   state = {
@@ -70,12 +71,16 @@ export class Comments extends Component {
                           </span>
                         </li>
                         <li>
-                          <span className="comment-author">
+                          {/* <span className="comment-author">
                             <p className="grey-text">
                               <i className="material-icons">thumb_up</i>
                               {comment.votes}
                             </p>
-                          </span>
+                          </span> */}
+                          <Voter
+                            votes={comment.votes}
+                            comment_id={comment.comment_id}
+                          />
                         </li>
                         <li>
                           <span>
