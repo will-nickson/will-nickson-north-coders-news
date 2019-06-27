@@ -4,23 +4,39 @@ import NavBar from "./NavBar/NavBar";
 import ArticleList from "./Articles/ArticleList";
 import SingleArticle from "./Articles/SingleArticle";
 import TopicList from "./Topics/TopicList";
+import ArticleAdder from "./Articles/ArticleAdder/ArticleAdder";
 import "./App.css";
 
 export class App extends Component {
   state = {
     articles: [],
-    topics: []
+    topics: [],
+    loggedInUser: {
+      username: "jessjelly",
+      avatar_url:
+        "https://s-media-cache-ak0.pinimg.com/564x/39/62/ec/3962eca164e60cf46f979c1f57d4078b.jpg",
+      name: "Jess Jelly"
+    }
   };
 
   render() {
+    const { loggedInUser } = this.state;
+
     return (
       <div className="App">
         <NavBar />
         <Router>
-          <TopicList path="/topics" />
-          <ArticleList path="/" />
-          <ArticleList path="/topics/:topic" />
-          <SingleArticle path="/articles/:article_id" />
+          <TopicList path="/topics" username={loggedInUser.username} />
+          <ArticleList path="/" username={loggedInUser.username} />
+          <ArticleList path="/topics/:topic" username={loggedInUser.username} />
+          <SingleArticle
+            path="/articles/:article_id"
+            username={loggedInUser.username}
+          />
+          <ArticleAdder
+            path="/articles/post"
+            username={loggedInUser.username}
+          />
           {/* <Error default /> */}
         </Router>
       </div>
