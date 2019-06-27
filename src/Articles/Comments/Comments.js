@@ -12,74 +12,110 @@ export class Comments extends Component {
 
   render() {
     const { comments, hasError, loading } = this.state;
+    const { username } = this.props;
 
     if (loading) return <p>Loading...</p>;
     if (hasError) return <Error error={hasError} />;
 
     return (
       <div className="container section submit-comment">
-        <div className="row">
-          <form
-            onSubmit={this.addComment}
-            className="col s12"
-            style={{ display: "flex" }}
-          >
-            <div className="input-field z-depth-1 col s6">
-              <div>
-                <input
-                  type="text"
-                  name="userComment"
-                  placeholder="Add comment..."
-                  value={this.state.value}
-                  onChange={this.onChange}
-                  //   style={{ flex: "10", padding: "5px" }}
-                />
+        <div className="col s12 m5 offset-m1">
+          <div className="row z-depth-1 comment-card">
+            <form
+              onSubmit={this.addComment}
+              className="col s12"
+              /* onSubmit=""*/
+            >
+              <div className="input-field z-depth-1 col s12">
+                <div>
+                  <input
+                    type="text"
+                    name="userComment"
+                    placeholder="Add comment..."
+                    value={this.state.value}
+                    onChange={this.onChange}
+                  />
+                </div>
+                <div>
+                  <input
+                    type="submit"
+                    value="Submit"
+                    className="btn"
+                    onChange={this.onChange}
+                  />
+                </div>
               </div>
-              <div>
-                <input
-                  type="submit"
-                  value="Submit"
-                  className="btn"
-                  onChange={this.onChange}
-                  //   style={{ flex: "1" }}
-                />
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
         <div className="container section comments-list">
-          <div className="row z-depth-1 comment-card">
-            <div className="col s12 m6">
-              <div className="col s12 m5 offset-m1">
-                {comments &&
-                  comments.map((comment, index) => {
-                    return (
-                      <ul className="card z-depth-0 comment-list" key={index}>
-                        <span className="comment-author">
-                          <p className="grey-text">
-                            <i className="material-icons">perm_identity</i>
-                            {comment.author}
-                          </p>
-                        </span>
-                        <span className="comment-author">
-                          <p>{comment.body}</p>
-                        </span>
-                        <span className="comment-author">
-                          <p className="grey-text">
-                            <i className="material-icons">thumb_up</i>
-                            {comment.votes}
-                          </p>
-                        </span>
+          <div className="col s12 m5 offset-m1">
+            {comments &&
+              comments.map((comment, index) => {
+                return (
+                  <div className="row z-depth-1 comment-card" key={index}>
+                    <div className="col s12 m6">
+                      <ul className="card z-depth-0 comment-list">
+                        <li>
+                          <span className="comment-author">
+                            <p>{comment.body}</p>
+                          </span>
+                        </li>
+                        <li>
+                          <span className="comment-author">
+                            <p className="grey-text">
+                              <i className="material-icons">perm_identity</i>
+                              {comment.author}
+                            </p>
+                          </span>
+                        </li>
+                        <li>
+                          <span className="comment-author">
+                            <p className="grey-text">
+                              <i className="material-icons">thumb_up</i>
+                              {comment.votes}
+                            </p>
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            <button
+                              onClick={() =>
+                                this.handleDelete(comment.comment_id)
+                              }
+                              disabled={username !== comment.author}
+                            >
+                              <i className="material-icons">delete</i>
+                            </button>
+                          </span>
+                        </li>
                       </ul>
-                    );
-                  })}
-              </div>
-            </div>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
     );
   }
+
+  handleDelete = comment_id => {
+    const { comments } = this.state;
+
+    api
+      .deleteComment(comment_id)
+      .then(comment => {
+        this.setState(prevState => {
+          return {
+            comments: [
+              ...comments.filter(comment => comment.comment_id !== comment_id)
+            ]
+          };
+        });
+      })
+      .catch(error => console.dir(error));
+  };
 
   addComment = event => {
     event.preventDefault();
@@ -97,7 +133,7 @@ export class Comments extends Component {
           };
         });
       })
-      .catch(err => console.log(err));
+      .catch(error => console.log(error));
   };
 
   onChange = event => {

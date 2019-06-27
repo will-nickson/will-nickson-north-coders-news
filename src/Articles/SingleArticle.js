@@ -13,7 +13,7 @@ export class SingleArticle extends Component {
 
   render() {
     const { article, hasError, loading } = this.state;
-    const { article_id } = this.props;
+    const { article_id, username } = this.props;
 
     if (loading) return <p>Loading...</p>;
     if (hasError) return <Error error={hasError} />;
@@ -45,10 +45,7 @@ export class SingleArticle extends Component {
             </ul>
           </div>
         </div>
-        <Comments
-          article_id={this.props.article_id}
-          author={this.props.author}
-        />
+        <Comments article_id={article_id} username={username} />
       </div>
     );
   }
