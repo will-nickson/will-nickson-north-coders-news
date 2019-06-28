@@ -5,6 +5,7 @@ import ArticleList from "./Articles/ArticleList";
 import SingleArticle from "./Articles/SingleArticle";
 import TopicList from "./Topics/TopicList";
 import ArticleAdder from "./Articles/ArticleAdder/ArticleAdder";
+import Error from "./Error";
 import "./App.css";
 
 export class App extends Component {
@@ -24,7 +25,7 @@ export class App extends Component {
 
     return (
       <div className="App">
-        <NavBar />
+        <NavBar username={loggedInUser.username} />
         <Router>
           <TopicList path="/topics" username={loggedInUser.username} />
           <ArticleList path="/" username={loggedInUser.username} />
@@ -37,7 +38,7 @@ export class App extends Component {
             path="/articles/post"
             username={loggedInUser.username}
           />
-          {/* <Error default /> */}
+          <Error default />
         </Router>
       </div>
     );
