@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "@reach/router";
 
-const SignInLink = () => {
+const SignInLink = username => {
   return (
-    <ul className="right">
+    <ul className="right" hide-on-med-and-down="true">
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/topics">Topics List</Link>
       </li>
+
       <li>
-        <Link to="/">Sign Out</Link>
+        <Link to="/">Log Out</Link>
       </li>
       <li>
         <Link to="/" className="btn btn-floating pink lighten-1">

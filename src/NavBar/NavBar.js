@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "@reach/router";
 import SignInLink from "./SignInLink";
 import SignOutLink from "./SignOutLink";
 
-export default function NavBar() {
+export default function NavBar(username) {
   return (
     <nav className="nav-wrapper grey darken-3">
       <div className="container">
@@ -14,32 +13,11 @@ export default function NavBar() {
         >
           NC News
         </a>
-        {/* <a href="# className=" sidebar-trigger>
-          <i className="material-icons">menu</i>
-        </a> */}
-        <SignOutLink />
-        <SignInLink />
-
-        <div className="right" /*hide-on-med-and-down*/>
-          <Link to="/topics">
-            <button>Topics List</button>
-          </Link>
-        </div>
-        <div className="topics">
-          <select>
-            <option>
-              <Link to="/topics/coding">Coding</Link>
-            </option>
-
-            <option>
-              <Link to="/topics/football">Football</Link>
-            </option>
-
-            <option>
-              <Link to="/topics/cooking">Cooking</Link>
-            </option>
-          </select>
-        </div>
+        {username ? (
+          <SignInLink username={username} />
+        ) : (
+          <SignOutLink username={username} />
+        )}
       </div>
     </nav>
   );

@@ -71,29 +71,25 @@ export class Comments extends Component {
                           </span>
                         </li>
                         <li>
-                          {/* <span className="comment-author">
-                            <p className="grey-text">
-                              <i className="material-icons">thumb_up</i>
-                              {comment.votes}
-                            </p>
-                          </span> */}
                           <Voter
                             votes={comment.votes}
                             comment_id={comment.comment_id}
                           />
                         </li>
-                        <li>
-                          <span>
-                            <button
-                              onClick={() =>
-                                this.handleDelete(comment.comment_id)
-                              }
-                              disabled={username !== comment.author}
-                            >
-                              <i className="material-icons">delete</i>
-                            </button>
-                          </span>
-                        </li>
+                        {username !== comment.author ? null : (
+                          <li>
+                            <span>
+                              <button
+                                onClick={() =>
+                                  this.handleDelete(comment.comment_id)
+                                }
+                                disabled={username !== comment.author}
+                              >
+                                <i className="material-icons">delete</i>
+                              </button>
+                            </span>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </div>

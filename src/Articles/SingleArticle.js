@@ -26,7 +26,7 @@ export class SingleArticle extends Component {
               <span className="card-title">
                 <p>{article.title}</p>
               </span>
-              {/* <span className="card-body">{article.body}</span> */}
+              <span className="card-body">{article.body}</span>
               <span className="card-topic">
                 <p>{article.topic}</p>
               </span>
