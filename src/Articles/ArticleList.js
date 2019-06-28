@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../api";
 import { Link } from "@reach/router";
 import Error from "../Error";
+import { distanceInWords } from "date-fns";
 
 export class ArticleList extends Component {
   state = {
@@ -12,6 +13,7 @@ export class ArticleList extends Component {
     loading: true,
     page: 1
   };
+
   render() {
     const { articles, hasError, loading } = this.state;
 
@@ -22,23 +24,28 @@ export class ArticleList extends Component {
       <div>
         <div className="container section sort-by">
           <ul className="left">
-            <button onClick={() => this.setSortBy("created_at")}>
-              <li>Date</li>
-            </button>
+            <button onClick={() => this.setSortBy("created_at")}>Date</button>
             <button onClick={() => this.setSortBy("comment_count")}>
-              <li>Comment</li>
+              Comment
             </button>
-            <button onClick={() => this.setSortBy("votes")}>
-              <li>Votes</li>
-            </button>
+            <button onClick={() => this.setSortBy("votes")}>Votes</button>
             <button onClick={() => this.setOrderBy()}>Asc</button>
             <button onClick={() => this.setOrderBy()}>Desc</button>
             <button onClick={() => this.changePage(-1)}>Prev</button>
             <button onClick={() => this.changePage(1)}>Next</button>
+            <Link to="/topics/coding">
+              <button>Coding</button>
+            </Link>
+            <Link to="/topics/football">
+              <button>Football</button>
+            </Link>
+            <Link to="/topics/cooking">
+              <button>Cooking</button>
+            </Link>
           </ul>
         </div>
         <div className="container section article-list">
-          <div className="card z-depth-1">
+          <div className="card z-depth-5">
             <div className="card-content">
               {articles.map((article, index) => {
                 return (
@@ -49,10 +56,20 @@ export class ArticleList extends Component {
                       </Link>
                     </li>
                     <li className="card-content grey-text text-darken-3 left">
-                      {article.author}
+                      Author: {article.author}
                     </li>
                     <li className="card-content grey-text text-darken-3">
-                      ID: {article.article_id}
+                      Comment ID: {article.article_id}
+                    </li>
+                    <li className="card-content grey-text text-darken-3">
+                      Comment Count: {article.comment_count}
+                    </li>
+                    <li className="card-content grey-text text-darken-3">
+                      Votes: {article.votes}
+                    </li>
+                    <li className="card-content grey-text text-darken-3">
+                      Posted {distanceInWords(article.created_at, new Date())}{" "}
+                      ago
                     </li>
                   </ul>
                 );
@@ -97,7 +114,7 @@ export class ArticleList extends Component {
     const { sortBy, page, orderBy } = this.state;
 
     api
-      .getArticles(topic, sortBy, page, orderBy)
+      .getArticles(topic, sortBy, orderBy, page)
       .then(articles =>
         this.setState({ articles, loading: false, hasError: false })
       )

@@ -6,7 +6,7 @@ const Error = ({ hasError }) => {
       {hasError ? (
         <p>{hasError.repsonse.data.message || "Error"}</p>
       ) : (
-        <p>pagenotfound</p>
+        <p>page not found</p>
       )}
     </div>
   );
